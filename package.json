@@ -1,0 +1,24 @@
+{
+	"name": "ghost-upyun-store",
+	"version": "0.0.1",
+	"description": "Upyun store for Ghost blog.",
+	"main": "index.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/sanddudu/ghost-upyun-store.git"
+	},
+	"keywords": [
+		"Ghost",
+		"upyun",
+		"ghost-store"
+	],
+	"author": "Klion Xu",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/sanddudu/ghost-upyun-store/issues"
+	},
+	"homepage": "https://github.com/sanddudu/ghost-upyun-store",
+	"dependencies": {
+		"upyun": "1.1.3"
+	}
+}
