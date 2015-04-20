@@ -5,7 +5,6 @@ var fs  = require('fs-extra');
 var Promise = require('bluebird');
 var UPYUN = require('upyun');
 var moment = require('moment');
-var utils = require('../../../core/server/utils');
 
 function UpyunStore(config) {
 	this.options = config || {};
