@@ -28,10 +28,10 @@ UpyunStore.prototype.save = function(image) {
 				if (err || result.error) {
 					reject('[' + result.error.code + '] ' + result.error.message);
 				} else {
-					resolve(remoteURL + remotePath);
+					resolve(remoteURL + remotePath + _this.options.imgVersion);
 				}
 			});
-		})
+		});
 	});
 };
 

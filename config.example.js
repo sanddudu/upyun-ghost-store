@@ -33,7 +33,8 @@ config = {
                 operator: 'somebody',
                 password: 'secret',
                 domain: 'http://bucket.b0.upaiyun.com',
-                filePath: 'YYYY/MM/'
+                filePath: 'YYYY/MM/',
+                imgVersion: '_large'
             }
         }
     },
