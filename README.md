@@ -1,13 +1,15 @@
 # Ghost Upyun Storage
 将图片储存于又拍云。仅限于 Ghost 0.6.0 及以后版本使用。
 
-目前版本：1.0.1
+目前版本：1.1.0
 
-目前仅在 0.6.0 Stable 版本通过测试。
+已通过 0.10.0 测试
 
 七牛的储存模块请移步：[Minwe/qn-store](https://github.com/Minwe/qn-store)
 
-**1.0.0 已经支持通过模块启动**
+**1.1.0 以前的版本在 0.10.0 将无法使用，请您及时升级到新版**
+**1.1.0 不支持直接通过模块启动，请您修改 index.js 中的 BaseStore 到对应的地址**
+**1.0.1 有 BUG，不影响正常使用，但不推荐使用**
 
 ## 安装
 * 在 `content` 文件夹中创建一个名为 `storage` 的文件夹
@@ -37,10 +39,10 @@ storage: {
     operator: 'somebody', //操作员用户名
     password: 'secret', //操作员密码
     domain: 'http://bucket.b0.upaiyun.com', //空间绑定的域名，必须带 "http(s)://" ，结尾不能有 "/"
-    filePath: 'YYYY/MM/' //文件远端保存地址，默认为日期格式，由 moment 解析后填充，
-                           您可以修改为 "[您的目录地址]"，开头不能加 "/"，结尾必须加 "/"
-                           具体格式参见： [http://momentjs.com/](http://momentjs.com/)
-    imgVersion: '_large' // 自定义版本，需带上分隔符。使用原图则留空或删除该选项
+    filePath: 'YYYY/MM/', //文件远端保存地址，默认为日期格式，由 moment 解析后填充，
+                            您可以修改为 "[您的目录地址]"，开头不能加 "/"，结尾必须加 "/"
+                            具体格式参见： [http://momentjs.com/](http://momentjs.com/)
+    imgVersion: '' // 自定义版本，需带上分隔符（如 _large ）。使用原图则留空或删除该选项
   }
 }
 ```
@@ -49,7 +51,7 @@ storage: {
 源代码：  
 The MIT License (MIT)
 
-Copyright (c) 2015 Klion Xu
+Copyright (c) 2015-2016 Klion Xu
 
 Permission is hereby granted, free of charge, to any person obtaining a copy  
 of this software and associated documentation files (the "Software"), to deal  
@@ -70,25 +72,69 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 依赖包：  
-upyun：  
+moment:
+Copyright (c) 2011-2016 Tim Wood, Iskren Chernev, Moment.js contributors
+
+Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated documentation
+files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following
+conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+
+bluebird:
 The MIT License (MIT)
 
-Copyright (c) 2014 Leigh Zhu
+Copyright (c) 2013-2015 Petka Antonov
 
-Permission is hereby granted, free of charge, to any person obtaining a copy  
-of this software and associated documentation files (the "Software"), to deal  
-in the Software without restriction, including without limitation the rights  
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell  
-copies of the Software, and to permit persons to whom the Software is  
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all  
-copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,  
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF  
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,  
-DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR  
-OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE  
-OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+fs-extra:
+(The MIT License)
+
+Copyright (c) 2011-2016 JP Richardson
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files
+(the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify,
+ merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
+OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+upyun:
+MIT License

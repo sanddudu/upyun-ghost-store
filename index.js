@@ -1,14 +1,20 @@
 // # Upyun storage module for Ghost blog
 
 var path = require('path');
-var fs  = require('fs-extra');
-var Promise = require('bluebird');
-var UPYUN = require('upyun');
-var moment = require('moment');
+    fs  = require('fs-extra');
+    Promise = require('bluebird');
+    UPYUN = require('upyun');
+    moment = require('moment');
+	util = require('util');
+	BaseStore = require('../../../core/server/storage/base');
+
 
 function UpyunStore(config) {
+	BaseStore.call(this);
 	this.options = config || {};
 }
+
+util.inherits(UpyunStore, BaseStore);
 
 // ### Save
 // Saves the image to Upyun
@@ -17,20 +23,21 @@ function UpyunStore(config) {
 UpyunStore.prototype.save = function(image) {
 	var _this = this;
 
-	var upyun = new UPYUN (this.options.bucket, this.options.operator, this.options.password);
+	var upyun = new UPYUN (this.options.bucket, this.options.operator, this.options.password, 'v0.api.upyun.com', {apiVersion: 'v2'});
 
 	return new Promise (function (resolve, reject) {
 		var remotePath = _this.getRemotePath(image);
 		var remoteURL = _this.options.domain;
-		var contentType = _this.getContentType(image);
-		fs.readFile(image.path, function(err, data) {
-			upyun.uploadFile(remotePath, data, contentType, true, {mkdir: true}, function (err, result) {
-				if (err || result.error) {
-					reject('[' + result.error.code + '] ' + result.error.message);
-				} else {
+		upyun.putFile(remotePath, image.path, null, false, {}, function (err, result) {
+			if (err || result.statusCode!=200) {
+				reject('[' + result.data.code + '] ' + result.data.msg);
+			} else {
+				if (_this.options.imgVersion != undefined) {
 					resolve(remoteURL + remotePath + _this.options.imgVersion);
+				} else {
+					resolve(remoteURL + remotePath);
 				}
-			});
+			}
 		});
 	});
 };
@@ -43,26 +50,21 @@ UpyunStore.prototype.serve = function () {
 	};
 };
 
+UpyunStore.prototype.exists = function () {
+	// Server side will automatically replace the file.
+	return;
+};
+
+UpyunStore.prototype.delete = function (target) {
+	//For backup and security purposes there is no way to delete files
+	//whatever on local or server side through Ghost, please do it manually.
+	return;
+};
+
 UpyunStore.prototype.getRemotePath = function (image) {
 	var prefix = moment().format(this.options.filePath || 'YYYY/MM/').replace(/^\//, '');
 
 	return '/' + prefix + image.name;
-};
-
-UpyunStore.prototype.getContentType = function (image) {
-	var contentType = {
-		'.jfif': 'image/jpeg',
-		'.jpe': 'image/jpeg',
-		'.jpg': 'image/jpeg',
-		'.jpeg': 'image/jpeg',
-		'.png': 'image/png',
-		'.bmp': 'image/bmp',
-		'.gif': 'image/gif',
-		'.ico': 'image/x-icon'
-	};
-	var ext = path.extname(image.name).toLowerCase();
-
-	return contentType[ext];
 };
 
 module.exports = UpyunStore;
